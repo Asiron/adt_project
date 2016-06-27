@@ -17,7 +17,39 @@
 
 \usepackage[backend=bibtex]{biblatex}
 
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{8} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{8}  % for normal
 
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+		language=Python,
+		basicstyle=\ttm,
+		otherkeywords={self},             % Add keywords here
+		keywordstyle=\ttb\color{deepblue},
+		emph={MyClass,__init__},          % Custom highlighting
+		emphstyle=\ttb\color{deepred},    % Custom highlighting style
+		stringstyle=\color{deepgreen},
+		frame=tb,                         % Any extra options here
+		showstringspaces=false            % 
+	}}
+	
+	
+	% Python environment
+	\lstnewenvironment{python}[1][]
+	{
+		\pythonstyle
+		\lstset{#1}
+	}
+	{}
 
 \usepackage[utf8]{inputenc}
 
@@ -45,8 +77,60 @@
 
 \maketitle
 
-\section{Test}
 
+
+\section{What is apparently the best decision action in your problem from the environmental point of view, from the economic point of view, from the societal point of view, and from a global multi-objectives compromise point of view ?}
+
+All operations on data were done using \texttt{Digraph3}\footnote{Digraph3 is hosted at \url{https://github.com/rbisdorff/Digraph3}} Python3 package, which implements decision aid algorithms in the context of bipolarly-valued outranking approach.
+
+Let us first take a look, at best decision from the point of view of each category. In order to see that, we have to first make sure to neglect all other criteria. To achieve that, we must first create a partial performance tableau from the original performance tableau. Program \texttt{code/bcr\_categories.py} implements all operations needed to show Best Choice Recommendation from the environmental, economical and societal point of view.
+
+We first find a set of criteria that belong to a certain category (e.g Economical) and create a partial performance tableau with only these criterias. We now create a Bipolar Outranking Digraph from that performance table and use Rubis solver to get a potential Best Choice Recommendation, which is depicted in Figure \ref{lst:rubis}.
+
+\begin{figure}[H]
+\begin{center}
+\begin{python}
+from perfTabs import *
+from outrankingDigraphs import BipolarOutrankingDigraph
+pt = XMCDA2PerformanceTableau('project_2')
+criterias = [c for c, val in pt.criteria.items() if 'Eco' in val['name']]
+ppt = PartialPerformanceTableau(pt,criteriaSubset=criterias)
+partial_digraph = BipolarOutrankingDigraph(ppt)
+partial_digraph.showRubisBestChoiceRecommendation()
+\end{python}
+\end{center}
+\caption{Rubis Best Choice Recommendation code-snippet}
+\label{lst:rubis}
+\end{figure}
+
+Outranking Digraph is based on the idea of outranking. For two alternative $a$ and $b$, $a$ outranks $b$ $(a S b)$ if there exist a significat majority of criteria supporting that $a$ is \emph{at least} as good as $y$ and no considerable counter-performance (\emph{no veto}) is observed on any discordant criterion. For each Outranking Digraph a relation table was generated and saved in directory:
+
+\texttt{report/figures/*\_bipolar\_adj\_matrix.html} 
+
+\subsection{From the Economical point of view}
+
+The output of the Rubis Best Choice Recommendation from the Economic point of view is the following: we get three potential BCRs, an alternative \textbf{a19} and a tuple of alternatives \textbf{a31, a48} with the same values. All the values share the same \emph{dominance} at 33.33 and \emph{absorbency} at -100.00. However, \textbf{a19} is a \textbf{better} candidate, because \emph{covering} is maxed out at 100.00\% and \emph{determinateness} is higher as well at 66.67\% compared to 50.00\%. Another way to confirm that \textbf{a19} is in fact a better BCR candidate is to check the Condorcet and the Weak-Condorcet winners. Figure \ref{lst:condo} is showing us how to calculate this. The Condorcet winner from Economical point of view is as expected \textbf{a19} and the Weak-Condorcet winners are \textbf{a19, a36, a48}, which also disqualifies previously seen \textbf{a31}. Therefore, \textbf{a19} is the best choice from Economical point of view!
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{python}
+weak_condorcet_winners = partial_digraph.weakCondorcetWinners()
+condorcet_winners      = partial_digraph.condorcetWinners()
+		\end{python}
+	\end{center}
+	\caption{Condorcet and Weak Condorcet winner code-snippet}
+	\label{lst:condo}
+\end{figure}
+
+\subsection{From the Environmental point of view}
+
+The output of the Rubis Choice Recommendation from the Environmental point of view 
+
+\section{What are the five potential best compromise choice candidates in your problem ?}
+
+\section{How would you rank your set of alternatives ?}
+
+\section{How would you sort your alternatives into performance deciles ? }
 
 
 	\printbibliography
