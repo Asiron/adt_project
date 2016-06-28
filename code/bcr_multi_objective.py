@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+__author__  = "Maciej Zurad"
+__email__   = "maciej.zurad@gmail.com"
+__license__ = "GPL"
+
 import os
 from perfTabs import *
 from weakOrders import RankingByChoosingDigraph
@@ -40,7 +44,7 @@ print('')
 
 full_digraph = BipolarOutrankingDigraph(pt)
 
-html_heatmap = pt.htmlPerformanceHeatmap()
+html_heatmap = pt.htmlPerformanceHeatmap(RankingRule='Kohler')
 fwrite(html_heatmap, make_path("full_heatmap.html"))
 
 html_relationtable = full_digraph.htmlRelationTable(isColored=True)
@@ -73,4 +77,4 @@ printline()
 print('Weakly ordering from a global multi-objectives compromise point of view')
 rbc = RankingByChoosingDigraph(codual_full_digraph)
 rbc.showRankingByChoosing()
-rbc.exportGraphViz(make_path("weak_ordering"))
+rbc.exportGraphViz(make_path("weakly_ordering"))

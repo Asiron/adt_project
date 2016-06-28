@@ -5,3 +5,5 @@
 *.aux
 *.out
 *.run.xml
+*.blg
+*.bbl

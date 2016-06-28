@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+__author__  = "Maciej Zurad"
+__email__   = "maciej.zurad@gmail.com"
+__license__ = "GPL"
+
 import os
 from perfTabs import *
 from outrankingDigraphs import BipolarOutrankingDigraph
