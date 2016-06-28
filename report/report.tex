@@ -85,9 +85,9 @@
 
 All operations on data were done using \texttt{Digraph3}\footnote{Digraph3 is hosted at \url{https://github.com/rbisdorff/Digraph3}} Python3 package, which implements decision aid algorithms in the context of bipolarly-valued outranking approach.
 
-Let us first take a look, at best decision from the point of view of each category. In order to see that, we have to first make sure to neglect all other criteria. To achieve that, we must first create a partial performance tableau from the original performance tableau. Program \texttt{code/bcr\_categories.py} implements all operations needed to show Best Choice Recommendation from the environmental, economical and societal point of view. The ouput of this program was also saved to \texttt{code/bcr\_categories.out}
+Let us first take a look, at best decision from the point of view of each category. In order to see that, we have to first make sure to neglect all other criteria. To achieve that, we must first create a partial performance tableau from the original performance tableau. Program \texttt{code/bcr\_categories.py} implements all operations needed to show Best Choice Recommendation from the environmental, economical and societal point of view. The output of this program was also saved to \texttt{code/bcr\_categories.out}
 
-We first find a set of criteria that belong to a certain category (e.g Economical) and create a partial performance tableau with only these criterias. We now create a Bipolar Outranking Digraph from that performance table and use Rubis\cite{bisdorff2008r, bisdorff2006choices} solver to get a potential Best Choice Recommendation, which is depicted in Figure \ref{lst:rubis}.
+We first find a set of criteria that belong to a certain category (e.g Economical) and create a partial performance tableau with only these criteria. We now create a Bipolar Outranking Digraph from that performance table and use Rubis\cite{bisdorff2008r, bisdorff2006choices} solver to get a potential Best Choice Recommendation, which is depicted in Figure \ref{lst:rubis}.
 
 \begin{figure}[H]
 \begin{center}
@@ -105,7 +105,7 @@ partial_digraph.showRubisBestChoiceRecommendation()
 \label{lst:rubis}
 \end{figure}
 
-Outranking Digraph is based on the idea of outranking. For two alternative $a$ and $b$, $a$ outranks $b$ $(a S b)$ if there exist a significat majority of criteria supporting that $a$ is \emph{at least} as good as $y$ and no considerable counter-performance (\emph{no veto}) is observed on any discordant criterion. For each Outranking Digraph a relation table was generated and saved in directory:
+Outranking Digraph is based on the idea of outranking. For two alternative $a$ and $b$, $a$ outranks $b$ $(a S b)$ if there exist a significant majority of criteria supporting that $a$ is \emph{at least} as good as $y$ and no considerable counter-performance (\emph{no veto}) is observed on any discordant criterion. For each Outranking Digraph a relation table was generated and saved in directory:
 
 \texttt{report/figures/*\_bipolar\_adj\_matrix.html} 
 
@@ -133,7 +133,7 @@ The output of the Rubis Choice Recommendation from the Environmental point of vi
 
 \subsection{From the Societal point of view}
 
-Rubis Choice Recommendation from the Societal point of view bring the same situation as from Environmental point of view (section \ref*{sec:env}). The Rubis solver gives us three alternatives: \textbf{a18, a38, a49}. They also share exactly the same values and the Condorcet winners are also \textbf{a18, a38, a49}. Weak-Condorcet winners are: \textbf{a18, a38, a49, a12, a33, a45}. Another interesting thing we can try is to do Strictly Best Choice by computing the \textbf{codual} of the Outranking Digraph, that is a converse of a dual and after that run this graph through Rubis solver, which is presented in Figure \ref{lst:strict}. This gives a single BCR\footnote{BCR stands for Best Choice Recommendation} which is a list and contains all Weak-Condorcet winners. However, when we look into the characteristic vector, which represents, whether an alternative may indeed be considered a best choice, we see that only Condorcet winners are determined and that sole Weak-Condorecet winners are not relevant, because they have a 0.0 value. In the end I chose only those 3: \textbf{a18, a38, a49} to be the BCRs from Societal point of view. 
+Rubis Choice Recommendation from the Societal point of view bring the same situation as from Environmental point of view (section \ref*{sec:env}). The Rubis solver gives us three alternatives: \textbf{a18, a38, a49}. They also share exactly the same values and the Condorcet winners are also \textbf{a18, a38, a49}. Weak-Condorcet winners are: \textbf{a18, a38, a49, a12, a33, a45}. Another interesting thing we can try is to do Strictly Best Choice by computing the \textbf{codual} of the Outranking Digraph, that is a converse of a dual and after that run this graph through Rubis solver, which is presented in Figure \ref{lst:strict}. This gives a single BCR\footnote{BCR stands for Best Choice Recommendation} which is a list and contains all Weak-Condorcet winners. However, when we look into the characteristic vector, which represents, whether an alternative may indeed be considered a best choice, we see that only Condorcet winners are determined and that sole Weak-Condorcet winners are not relevant, because they have a 0.0 value. In the end I chose only those 3: \textbf{a18, a38, a49} to be the BCRs from Societal point of view. 
 
 \begin{figure}[H]
 	\begin{center}
@@ -149,7 +149,7 @@ codual_partial.showRubisBestChoiceRecommendation()
 \subsection{From the global multi-objectives compromise point of view}
 \label{sec:global}
 
-We follow like in the previous examples, except that now we don't have first create Partial Performance Tableau like shown in Figure \ref*{lst:rubis} and we directly call Rubis solver with the the Perfomance Tableau received when loading the data. We receive following: \textbf{a45, a20} and a tuple \textbf{(a38, a48)}. The Condorcet winners are also \textbf{a45, a20} and as we would expect the Weak-Condorcet winners are \textbf{a45, a20, a38, a48}. Figure \ref{fig:20and45} presents the values for alternatives \textbf{a20, a45} and figure \ref{fig:38_48} presents for \textbf{(a38, a48)}. We can see that \textbf{a45} has the best values, not only it has the highest \emph{determinateness} but also \emph{dominance}, which makes it the \texttt{Best Choice Recommendation} from the global multi-objectives compromise point of view.
+We follow like in the previous examples, except that now we don't have first create Partial Performance Tableau like shown in Figure \ref*{lst:rubis} and we directly call Rubis solver with the the Performance Tableau received when loading the data. We receive following: \textbf{a45, a20} and a tuple \textbf{(a38, a48)}. The Condorcet winners are also \textbf{a45, a20} and as we would expect the Weak-Condorcet winners are \textbf{a45, a20, a38, a48}. Figure \ref{fig:20and45} presents the values for alternatives \textbf{a20, a45} and figure \ref{fig:38_48} presents for \textbf{(a38, a48)}. We can see that \textbf{a45} has the best values, not only it has the highest \emph{determinateness} but also \emph{dominance}, which makes it the \texttt{Best Choice Recommendation} from the global multi-objectives compromise point of view.
 
 \begin{figure}[H]
 	\hfill
@@ -171,6 +171,7 @@ We follow like in the previous examples, except that now we don't have first cre
 All the output to calculate BCR from the global multi-objective compromise point of view was saved \texttt{code/bcr\_multi\_objective.out} and can be generated again using \texttt{code/bcr\_multi\_objective.py}.
 
 \section{What are the five potential best compromise choice candidates in your problem ?}
+\label{sec:two}
 
 Section \ref{sec:global} described BCR from the multi-objective point of view. We saw there, 4 Best Choice Recommendations that Rubis solver offered, from which I chose a single one (\textbf{a45}). To choose 5, we can now simply choose those 4 and we will be missing only last. To find the $5^{th}$, we will use a performance heatmap, presented in figure \ref{fig:heatmap}. We can generate this performance heatmap very easily. Instead of showing it in browser, I directly save it on a disk using this code snippet depicted in Figure \ref{lst:html}. This heatmap is by default ranked with a Copeland ranking rule, which will be described later on (section \ref{sec:copeland}). If we took 4 BCRs that we defined previously from the Heatmap, then we would take from row 1,2,3 and 6. A common sense would tell us to take the next best in this ranking, which would be in row 4 (\textbf{a35}). We will see later that a different ranking rule would give us a different result. Therefore, the five potential best compromise choice candidates are \textbf{a45, a20, a38, a48} and \textbf{a35}.
 \begin{figure}[H]
@@ -187,7 +188,7 @@ html_heatmap = pt.htmlPerformanceHeatmap()
 fwrite(html_heatmap, make_path("full_heatmap.html"))    
 		\end{python}
 	\end{center}
-	\caption{Perfomance Heatmap generation and saving}
+	\caption{Performance Heatmap generation and saving}
 	\label{lst:html}
 \end{figure}
 
@@ -305,7 +306,7 @@ and the following fitness value: \textbf{0.877}
 
 \subsection{Kohler's ranking}
 
-Kohler's ranking is also known as \textbf{ranking-by-choosing}. The algorithm is fairly easy and can be described in few steps. Step 1, we take the Relation Table from the outranking graph (basically the previously described adjacency matrix). Step 2, for each row, we find it's minimum and we select a row, where this minimum is maximum among other rows. Step 3, we place this alterantive at rank highest possible rank. Step 4, we delete corresponding row and column of the last alternative and we go to Step 1 unless table is empty.
+Kohler's ranking is also known as \textbf{ranking-by-choosing}. The algorithm is fairly easy and can be described in few steps. Step 1, we take the Relation Table from the outranking graph (basically the previously described adjacency matrix). Step 2, for each row, we find it's minimum and we select a row, where this minimum is maximum among other rows. Step 3, we place this alternative at rank highest possible rank. Step 4, we delete corresponding row and column of the last alternative and we go to Step 1 unless table is empty.
 
 \begin{figure}[H]
 	\begin{center}
@@ -342,8 +343,8 @@ print("Fitness of Tideman's Ranked-Pairs rule ranking: %.3f" % rp_corr['correlat
 
 		\end{python}
 	\end{center}
-	\caption{Computing Kohler's ranking and its fitness}
-	\label{lst:kohler}
+	\caption{Computing Tideman's Ranked-Pairs ranking and its fitness}
+	\label{lst:tideman}
 \end{figure}
 
 
@@ -351,9 +352,40 @@ I received the following ranking from Tideman's Ranked-Pairs:\\
 
 \textbf{[a45, a20, a41, a38, a35, a48, a02, a29, a49, a34, a14, a12, a27, a06, a31, a18, a28, a17, a01, a09, a08, a22, a50, a13, a11, a33, a10, a25, a47, a32, a05, a26, a36, a42, a43, a04, a19, a37, a21, a07, a40, a16, a46, a39, a44, a24, a15, a03, a30, a23]}\\
 
-and the following fitness value: \textbf{0.863}
+and the following fitness value: \textbf{0.893}
+
+\subsection{Conclusions on Ranking}
+
+As we can see different Ranking methods give us quite different results. They also have higher or lower fitness values. Highest fitness values was achieved by Tideman's Ranked-Pairs ranking with value 0.893, shortly after that we have Net-Flows ranking with value 0.877 and at the end we have Copeland's with 0.868 and Kohler's with 0.863.
+
+Another important thing is to remember that Copeland and Net-Flows are very fast algorithms, where Kohler's and Tideman's are slower and do not scale so well. There also exist optimal ranking algorithms such as Kemeny and Slater. However, these two algorithms are exponential in complexity and running them on a graph bigger than 15 seems infeasible.
+
+In the end my final ranking is Tideman's ranking, because it exhibited the highest fitness value.
 
 \section{How would you sort your alternatives into performance deciles ? }
+
+In order to sort our alternatives into performance deciles, we have to use Sorting Digraphs. QuantilesSortingDigraphs are subclass of SortingDigraphs, that work well for large graphs. Figure \ref{lst:sorting} shows code-snippet, which allows to compute that. Figure \ref{fig:sorting_graph} presents our graph. The graph shows only 8 rows, because 2 deciles are empty. There is no alternative, which is in the top and bottom deciles ([0.9 - 1.0] and [ 0.0 - 0.1]). Output of the program described in figure \ref{lst:sorting} was saved as well to \texttt{code/ranking\_and\_sorting.out}. From the graph, we can clearly recognize our BCRs candidates and Condorcet winners, which as we would expect are in the top row, together with the $5^{th}$ BCR that we added in section \ref{sec:two}
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{python}
+from sortingDigraphs import QuantilesSortingDigraph
+qs = QuantilesSortingDigraph(pt,limitingQuantiles=10)
+qs.showSorting()
+qs.showQuantileOrdering()
+qs.exportGraphViz(make_path("sorted_deciles_graph"))
+		\end{python}
+	\end{center}
+	\caption{Computing Quantile Ordering for 10 quantiles (deciles)}
+	\label{lst:sorting}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=11cm]{figures/sorted_deciles_graph}
+	\caption{Decile Sorting Digraph}
+	\label{fig:sorting_graph}
+\end{figure}
 
 
 
